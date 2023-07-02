@@ -4,164 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
+
+//
 namespace LeetCode
 {
     public static class RomantoInteger
     {
-        public static int RomanToInt(string s)
+        private static Dictionary<char, int> _romanMap = new Dictionary<char, int>
         {
-            int result = 0;
+            {'I', 1}, {'V', 5}, {'X', 10}, {'L', 50}, {'C', 100}, {'D', 500}, {'M', 1000}
+        };
 
-            for (int i = 0; i < s.Length;)
+        public static int RomanToInteger(string text)
+        {
+            int totalValue = 0, prevValue = 0;
+            foreach (var c in text)
             {
-                if (s.Length - i > 1)
+                if (!_romanMap.ContainsKey(c))
+                    return 0;
+                var crtValue = _romanMap[c];
+                totalValue += crtValue;
+                if (prevValue != 0 && prevValue < crtValue)
                 {
-                    if (s[i] == 'I')
-                    {
-                        if (s[i + 1] == 'V')
-                        {
-                            i += 2;
-                            result += 4;
-                        }
-                        else if (s[i + 1] == 'X')
-                        {
-                            i += 2;
-                            result += 9;
-                        }
-                        else
-                        {
-                            i++;
-                            result++;
-                        }
-
-                        if (i >= s.Length)
-                            return result;
-                    }
-
-                    switch (s[i])
-                    {
-                        case 'V':
-                        {
-                            i++;
-                            result += 5;
-                            break;
-                        }
-                        case 'L':
-                        {
-                            result += 50;
-                            i++;
-                                break;
-                        }
-                        case 'D':
-                        {
-                            result += 500;
-                            i++;
-                                break;
-                        }
-                        case 'M':
-                        {
-                            result += 1000;
-                            i++;
-                                break;
-                        }
-                    }
-                    
-
-                    if (s[i] == 'X')
-                    {
-                        if (s[i + 1] == 'L')
-                        {
-                            i += 2;
-                            result += 40;
-                        }
-                        else if (s[i + 1] == 'C')
-                        {
-                            i += 2;
-                            result += 90;
-                        }
-                        else
-                        {
-                            i++;
-                            result += 10;
-                        }
-
-                        if (i > s.Length)
-                            return result;
-                    }
-
-                    if (s[i] == 'C')
-                    {
-                        if (s[i + 1] == 'D')
-                        {
-                            i += 2;
-                            result += 400;
-                        }
-                        else if (s[i + 1] == 'M')
-                        {
-                            i += 2;
-                            result += 900;
-                        }
-                        else
-                        {
-                            i++;
-                            result += 100;
-                        }
-
-                        if (i > s.Length)
-                            return result;
-                    }
+                    if (prevValue == 1 && (crtValue == 5 || crtValue == 10)
+                        || prevValue == 10 && (crtValue == 50 || crtValue == 100)
+                        || prevValue == 100 && (crtValue == 500 || crtValue == 1000))
+                        totalValue -= 2 * prevValue;
+                    else
+                        return 0;
                 }
-                else
-                    {
-                        switch (s[i])
-                        {
-                            case 'I':
-                            {
-                                result += 1;
-                                i++;
-                                break;
-                            }
-                            case 'V':
-                            {
-                                result += 5;
-                                i++;
-                                break;
-                            }
-                            case 'X':
-                            {
-                                result += 10;
-                                i++;
-                                break;
-                            }
-                            case 'L':
-                            {
-                                result += 50;
-                                i++;
-                                break;
-                            }
-                            case 'C':
-                            {
-                                result += 100;
-                                i++;
-                                break;
-                            }
-                            case 'D':
-                            {
-                                result += 500;
-                                i++;
-                                break;
-                            }
-                            case 'M':
-                            {
-                                result += 1000;
-                                i++;
-                                break;
-                            }
-                        }
-                    }
+                prevValue = crtValue;
             }
-
-            return result;
+            return totalValue;
         }
     }
 
@@ -170,7 +46,7 @@ namespace LeetCode
         {
             
             string str = Console.ReadLine();
-            Console.WriteLine(RomantoInteger.RomanToInt(str));
+            Console.WriteLine(RomantoInteger.RomanToInteger(str));
         }
     }
 }
