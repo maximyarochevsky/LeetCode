@@ -8,31 +8,105 @@ namespace LeetCode
 {
     public class LongestCommonPrefixClass
     {
+        //public static string ForTwoStrings(string A, string B)
+        //{
+        //    string str = "";
+        //    for (int i = 0, j = 0; i < A.Length && j < B.Length;)
+        //    {
+                
+        //        if (A[i] != B[j])
+        //        {
+        //            str = "";
+        //            break;
+        //        }
+
+        //        str += A[i];
+        //        j++;
+        //        i++;
+        //    }
+
+        //    return str;
+        //}
+
         public static string ForTwoStrings(string A, string B)
         {
-            string str = "";
-            for (int i = 0, j = 0; i < A.Length && j < B.Length;)
+            string result = "";
+            string maxResult = "";
+            int tempIndex = 0;
+            for (int a = 0; a < A.Length; a++)
             {
-                
-                if (A[i] != B[j])
+                int aTemp = a;
+                for (int b = 0; b < B.Length && aTemp < A.Length; b++)
                 {
-                    str = "";
-                    break;
+                    if (A[aTemp] == B[b])
+                    {
+                        result += A[aTemp];
+                        if (aTemp < A.Length)
+                            aTemp++;
+                        else
+                            break;
+                    }
+                    else
+                    {
+                        result = "";
+                        aTemp = a;
+                    }
+                    if (result.Length > maxResult.Length)
+                    {
+                        maxResult = result;
+                    }
                 }
+                result = "";
+            }
+            return maxResult;
+        }
 
-                str += A[i];
-                j++;
+
+        public static string LongestCommonPrefix(string[] ss)
+        {
+            int i = 0;
+            StringBuilder sb = new();
+            string shortest = ss.OrderBy(s => s.Length).First();
+
+            foreach (char c in shortest)
+            {
+                if (ss.Any(s => s[i] != c)) break;
+                sb.Append(c);
                 i++;
             }
 
-            return str;
+            return sb.ToString();
         }
 
 
         //public static string LongestCommonPrefix(string[] strs)
         //{
-   
-         
+        //    string result = ForTwoStrings(strs[0], strs[1]);
+
+        //    if (result == "")
+        //        return result;
+
+        //    string tempResult = "";
+
+        //    for (int i = 0; i + 2 < strs.Length; i++)
+        //    {
+        //        tempResult = ForTwoStrings(strs[i], strs[i + 1]);
+        //        if (tempResult == "")
+        //            return result;
+
+        //        if (ForTwoStrings(ForTwoStrings(strs[i], strs[i + 1]), ForTwoStrings(strs[i + 1], strs[i + 2])) == "")
+        //        {
+        //            return "";
+        //        }
+
+
+
+        //        if (tempResult.Length < result.Length)
+        //            result = tempResult;
+
+
+        //    }
+        //    return result;
         //}
     }
 }
