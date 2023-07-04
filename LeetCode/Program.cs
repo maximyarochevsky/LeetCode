@@ -10,35 +10,12 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            string s1 = "dsdd";
-            string s2 = "ads";
-
-            string [] str = new string[]
-            {
-                "sdsflower",
-                "sflow",
-                "fliter"
-            };
-
-            string[] fals = new string[]
-            {
-                "ring",
-                "abdul",
-                "mops"
-            };
-
-            string[] polu = new string[]
-            {
-                "ring",
-                "in",
-                "poms"
-            };
-
-            Console.WriteLine(LongestCommonPrefixClass.ForTwoStrings(s1,s2));
-
-            Console.WriteLine(LongestCommonPrefixClass.LongestCommonPrefix(str));
-            Console.WriteLine(LongestCommonPrefixClass.LongestCommonPrefix(fals));
-            Console.WriteLine(LongestCommonPrefixClass.LongestCommonPrefix(polu));
+            string str1 = "{({[]})}";
+            string str2 = "{{{{}}}";
+            string str3 = "{]";
+            Console.WriteLine(ValidParentheses.IsValid(str1));
+            Console.WriteLine(ValidParentheses.IsValid(str2));
+            Console.WriteLine(ValidParentheses.IsValid(str3));
         }
     }
 }
