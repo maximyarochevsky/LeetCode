@@ -62,22 +62,18 @@ namespace LeetCode
         }
 
 
-        public static string LongestCommonPrefix(string[] ss)
-        {
-            int i = 0;
-            StringBuilder sb = new();
-            string shortest = ss.OrderBy(s => s.Length).First();
-
-            foreach (char c in shortest)
+            public static string LongestCommonPrefix(string[] ss)
             {
-                if (ss.Any(s => s[i] != c)) break;
-                sb.Append(c);
-                i++;
+                string shortest = ss.OrderBy(s => s.Length).First();
+
+                for (int i = 0; i < shortest.Length; i++)
+                {
+                    if (ss.Select(s => s[i]).Distinct().Count() > 1) return shortest[..i];
+                }
+
+                return shortest;
             }
-
-            return sb.ToString();
-        }
-
+        
 
         //public static string LongestCommonPrefix(string[] strs)
         //{
@@ -87,7 +83,7 @@ namespace LeetCode
         //        return result;
 
         //    string tempResult = "";
-
+            
         //    for (int i = 0; i + 2 < strs.Length; i++)
         //    {
         //        tempResult = ForTwoStrings(strs[i], strs[i + 1]);
@@ -99,12 +95,12 @@ namespace LeetCode
         //            return "";
         //        }
 
-
+                
 
         //        if (tempResult.Length < result.Length)
         //            result = tempResult;
 
-
+                
         //    }
         //    return result;
         //}
