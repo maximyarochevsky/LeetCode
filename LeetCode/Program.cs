@@ -10,14 +10,14 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            string s1 = "asd";
-            string s2 = "as";
+            string s1 = "dsdd";
+            string s2 = "ads";
 
             string [] str = new string[]
             {
-                "string",
-                "str",
-                "abdulstr"
+                "sdsflower",
+                "sflow",
+                "fliter"
             };
 
             string[] fals = new string[]
@@ -36,9 +36,9 @@ namespace LeetCode
 
             Console.WriteLine(LongestCommonPrefixClass.ForTwoStrings(s1,s2));
 
-            //Console.WriteLine(LongestCommonPrefixClass.LongestCommonPrefix(str));
-            //Console.WriteLine(LongestCommonPrefixClass.LongestCommonPrefix(fals));
-            //Console.WriteLine(LongestCommonPrefixClass.LongestCommonPrefix(polu));
+            Console.WriteLine(LongestCommonPrefixClass.LongestCommonPrefix(str));
+            Console.WriteLine(LongestCommonPrefixClass.LongestCommonPrefix(fals));
+            Console.WriteLine(LongestCommonPrefixClass.LongestCommonPrefix(polu));
         }
     }
 }
