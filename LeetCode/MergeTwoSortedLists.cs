@@ -29,10 +29,12 @@ namespace LeetCode
             if (list2 == null)
                 return list1;
 
-            if (list1.value < list2.value)
+            if (list1.value < list2.value) // сравниваем два значения
             {
-                list1.next = MergeTwoLists(list1.next, list2);
-                return list1;
+                //определяем первым меньшее значение а следующим ставим либо второе, либо некст первого
+                list1.next = MergeTwoLists(list1.next, list2); 
+                
+                return list1; // возвращаем наименьшее
             }
             else
             {
