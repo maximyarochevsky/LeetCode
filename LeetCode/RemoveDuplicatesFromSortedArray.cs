@@ -18,5 +18,16 @@ namespace LeetCode
 
             return array.Length;
         }
+
+            public int RemoveElement(int[] nums, int val)
+            {
+                int[] array = nums.Where(x => x != val).ToArray();
+                for (int i = 0; i < array.Length; i++)
+                {
+                    nums[i] = array[i];
+                }
+                return array.Length;
+            }
+        
     }
 }
