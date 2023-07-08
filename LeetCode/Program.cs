@@ -12,8 +12,9 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            int[] nums = { 1, 1, 2 };
-            Console.WriteLine(RemoveDuplicatesFromSortedArray.RemoveDuplicates(nums));
+            string str1 = "mississippi";
+            string str2 = "issip";
+            Console.WriteLine(FirstIndexOfTheFirstOccurrenceInAString.StrStr(str1,str2));
         }
     }
 }
