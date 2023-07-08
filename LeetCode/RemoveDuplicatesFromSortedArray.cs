@@ -28,6 +28,20 @@ namespace LeetCode
                 }
                 return array.Length;
             }
-        
+        //самое эффективное 
+        //public int RemoveElement(int[] nums, int val)
+        //{
+
+        //    int j = 0;
+        //    foreach (int i in nums)
+        //    {
+        //        if (i != val)
+        //        {
+        //            nums[j++] = i;
+        //        }
+        //    }
+
+        //    return j;
+        //}
     }
 }
