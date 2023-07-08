@@ -10,14 +10,13 @@ namespace LeetCode
     {
         public static int RemoveDuplicates(int[] nums)
         {
-            int i = 1;
-
-            foreach (int n in nums)
+            int []array = nums.Distinct().ToArray();
+            for (int i = 0; i < array.Length; i++)
             {
-                if (nums[i - 1] != n) nums[i++] = n;
+                nums[i] = array[i];
             }
 
-            return i;
+            return array.Length;
         }
     }
 }
