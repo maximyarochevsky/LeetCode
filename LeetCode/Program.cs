@@ -12,8 +12,8 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            string str1 = "mississippi";
-            string str2 = "issip";
+            string str1 = "ippi";
+            string str2 = "pi";
             Console.WriteLine(FirstIndexOfTheFirstOccurrenceInAString.StrStr(str1,str2));
         }
     }
