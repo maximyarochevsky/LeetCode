@@ -19,6 +19,14 @@ namespace LeetCode
                 {
                     if (haystack[i] != needle[j])
                     {
+                        if(index != -1)
+                            i -= 1;
+                        index = -1;
+                        j = 0;
+                        continue;
+                    }
+                    if (haystack[i] != needle[j])
+                    {
                         index = -1;
                         j = 0;
                         continue;
