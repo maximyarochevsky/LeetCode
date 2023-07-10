@@ -12,9 +12,10 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            string str1 = "ippi";
-            string str2 = "pi";
-            Console.WriteLine(FirstIndexOfTheFirstOccurrenceInAString.StrStr(str1,str2));
+            int[] array = { 7, 1, 5, 3, 6, 4 };
+
+            Console.WriteLine(MaxProfit(array));
         }
+
     }
 }
