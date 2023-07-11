@@ -19,7 +19,7 @@
 
 //Input: nums = [3, 3], target = 6
 //Output: [0,1]
- 
+
 //Constraints:
 
 //2 <= nums.length <= 104
@@ -29,23 +29,75 @@
 
 public class Solution
 {
-    public int[] TwoSum(int[] nums, int target)
+    //easy
+    public static int[] TwoSum(int[] nums, int target)
     {
-        int[] array = new int[2];
-        array[0] = 0;
-        array[1] = 1;
+        Dictionary<int, int> seen = new Dictionary<int, int>();
         for (int i = 0; i < nums.Length; i++)
         {
-            for (int j = 0; j < nums.Length; j++)
+            int complement = target - nums[i];
+            if (seen.ContainsKey(complement))
             {
-                if (nums[i] + nums[j] == target && i != j)
-                {
-                    array[0] = i;
-                    array[1] = j;
-                    return array;
-                }
+                return new int[] {
+                    seen[complement], i
+                };
             }
+            seen[nums[i]] = i;
         }
-        return array;
+        return null; // No solution found
     }
+    //easy
+    public static int MaxProfit(int[] prices)
+    {
+        int result = 0;
+        int min = prices[0];
+        for (int i = 0; i < prices.Length; i++)
+        {
+            if (min > prices[i])
+                min = prices[i];
+            else if (result < prices[i] - min)
+                result = prices[i] - min;
+        }
+        return result;
+    }
+    //medium
+    public static int[] ProductExceptSelf(int[] nums)
+    {
+        int[] result = new int[nums.Length];
+
+        for (int i = 0, multi = 1; i < nums.Length; i++)
+        {
+            result[i] = multi;
+            multi = multi * nums[i];
+        }
+
+        for (int i = nums.Length, multi = 1; i >= 0; i--)
+        {
+            result[i] = result[i] * multi;
+            multi = nums[i] * multi;
+        }
+
+        return result;
+    }
+    // проходим массив таким образов
+    // ---------------->
+    // <----------------
+    // втреча в центре и дополнения слева правых, справа левых
+    //public int[] ProductExceptSelf(int[] nums)
+    //{
+    //    int n = nums.Length;
+    //    int[] ans = new int[n];
+    //    for (int i = 0; i < n; ++i) ans[i] = 1;
+
+    //    int leftProduct = 1, rightProduct = 1;
+    //    for (int i = 1, j = n - 2; i < n; ++i, --j)
+    //    {
+    //        leftProduct *= nums[i - 1];
+    //        rightProduct *= nums[j + 1];
+    //        ans[i] *= leftProduct;
+    //        ans[j] *= rightProduct;
+    //    }
+
+    //    return ans;
+    //}
 }
