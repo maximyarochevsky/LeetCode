@@ -181,4 +181,34 @@ public class Solution
 
         return dictionary.Values.ToList();
     }
+
+    //LINQ очень долго
+    //public static int[] TopKFrequent(int[] nums, int k)
+    //{
+    //    return nums.GroupBy(num => num)
+    //        .OrderByDescending(num => num.Count())
+    //        .Take(k)
+    //        .Select(c => c.Key)
+    //        .ToArray();
+    //}
+
+    //быстрее всего так, через словарь и приоритетную очередь
+    public int[] TopKFrequent(int[] nums, int k)
+    {
+        var dict = new Dictionary<int, int>();
+        var pq = new PriorityQueue<int, int>(Comparer<int>.Create((a, b) => b - a));
+        var res = new int[k];
+
+        foreach (var num in nums)
+            if (!dict.TryAdd(num, 1))
+                dict[num]++;
+
+        foreach (var pair in dict)
+            pq.Enqueue(pair.Key, pair.Value);
+
+        for (int i = 0; i < k; i++)
+            res[i] = pq.Dequeue();
+
+        return res;
+    }
 }
