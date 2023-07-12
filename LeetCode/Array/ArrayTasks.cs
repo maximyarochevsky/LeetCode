@@ -151,4 +151,64 @@ public class Solution
         t = String.Concat(t.OrderBy(c => c));
         return s == t ? true : false;
     }
+
+
+
+    //medium
+
+    public static IList<IList<string>> GroupAnagrams(string[] strs)
+    {
+        Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
+
+        for (int i = 0; i < strs.Length; i++)
+        {
+            //var c = String.Concat(strs[i].OrderBy(c => c)); - намного медленне, чем сортировка через Arrat.Sort
+
+            char[] arr = strs[i].ToCharArray();
+            Array.Sort(arr);
+            string c = new string(arr);
+
+            if (dictionary.ContainsKey(c))
+                dictionary[c].Add(strs[i]);
+            else
+            {
+                //dictionary[c] = new List<string>() { strs[i] }; - работает медленне, чем создание через Add
+                dictionary.Add(c, new List<string>() { strs[i] });
+            }
+        }
+
+        string[] keys = dictionary.Keys.ToArray();
+
+        return dictionary.Values.ToList();
+    }
+
+    //LINQ очень долго
+    //public static int[] TopKFrequent(int[] nums, int k)
+    //{
+    //    return nums.GroupBy(num => num)
+    //        .OrderByDescending(num => num.Count())
+    //        .Take(k)
+    //        .Select(c => c.Key)
+    //        .ToArray();
+    //}
+
+    //быстрее всего так, через словарь и приоритетную очередь
+    public int[] TopKFrequent(int[] nums, int k)
+    {
+        var dict = new Dictionary<int, int>();
+        var pq = new PriorityQueue<int, int>(Comparer<int>.Create((a, b) => b - a));
+        var res = new int[k];
+
+        foreach (var num in nums)
+            if (!dict.TryAdd(num, 1))
+                dict[num]++;
+
+        foreach (var pair in dict)
+            pq.Enqueue(pair.Key, pair.Value);
+
+        for (int i = 0; i < k; i++)
+            res[i] = pq.Dequeue();
+
+        return res;
+    }
 }
