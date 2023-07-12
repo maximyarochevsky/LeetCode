@@ -19,31 +19,42 @@ namespace LeetCode
             }
         }
 
-        public static int BinarySearch(int[] array, int value, int start, int end)
-        {
-            int center = (start+end) / 2;
-
-            if (array[center] == value)
-                return center;
-
-            else if (array[center] > value)
-            {
-                start = 0;
-                end = center;
-                return BinarySearch(array, value, start, end);
-            }
-            else
-            {
-                start = center;
-                end = array.Length;
-                return BinarySearch(array, value, start, end);
-            }
-        }
 
         static void Main(string[] args)
         {
-            int[] array = { 1,2,3,4,5,6,7,8};
-            Console.WriteLine(BinarySearch(array,6,0,array.Length));
+            string[] strs =
+            {
+                "eat", "tea", "tan", "ate", "nat", "bat"
+            };
+            IList<IList<string>> list = GroupAnagrams(strs);
+        }
+
+        public static IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            IList<IList<string>> result = new List<IList<string>>();
+            Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
+            string[] sortArray = new string[strs.Length];
+
+            for (int i = 0; i < strs.Length; i++)
+            {
+                sortArray[i] = String.Concat(strs[i].OrderBy(c => c));
+            }
+
+            for (int i = 0; i < strs.Length; i++)
+            {
+                if (dictionary.ContainsKey(sortArray[i]))
+                    dictionary[sortArray[i]].Add(strs[i]);
+                else
+                {
+                    dictionary[sortArray[i]] = new List<string>() { strs[i] };
+                }
+            }
+
+            string[] keys = dictionary.Keys.ToArray();
+
+                result = dictionary.Values.ToList();
+
+                return result;
         }
     }
 }

@@ -151,4 +151,34 @@ public class Solution
         t = String.Concat(t.OrderBy(c => c));
         return s == t ? true : false;
     }
+
+
+
+    //medium
+
+    public static IList<IList<string>> GroupAnagrams(string[] strs)
+    {
+        Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
+
+        for (int i = 0; i < strs.Length; i++)
+        {
+            //var c = String.Concat(strs[i].OrderBy(c => c)); - намного медленне, чем сортировка через Arrat.Sort
+
+            char[] arr = strs[i].ToCharArray();
+            Array.Sort(arr);
+            string c = new string(arr);
+
+            if (dictionary.ContainsKey(c))
+                dictionary[c].Add(strs[i]);
+            else
+            {
+                //dictionary[c] = new List<string>() { strs[i] }; - работает медленне, чем создание через Add
+                dictionary.Add(c, new List<string>() { strs[i] });
+            }
+        }
+
+        string[] keys = dictionary.Keys.ToArray();
+
+        return dictionary.Values.ToList();
+    }
 }
