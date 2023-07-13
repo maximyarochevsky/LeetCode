@@ -211,4 +211,86 @@ public class Solution
 
         return res;
     }
+
+    //medium
+    public static bool IsValidSudoku(char[][] board)
+    {
+        HashSet<char>[] row = new HashSet<char>[9]; // только уникальные элементы
+        HashSet<char>[] col = new HashSet<char>[9];
+        HashSet<char>[] sector = new HashSet<char>[9];
+
+        for (int i = 0; i < 9; i++)
+        {
+            row[i] = new HashSet<char>();
+            col[i] = new HashSet<char>();
+            sector[i] = new HashSet<char>();
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                var elem = board[i][j];
+                if (elem == '.')
+                    continue;
+
+                if (!row[j].Add(elem))
+                    return false;
+
+                if (!col[i].Add(elem))
+                    return false;
+
+                int k = (3 * (i / 3)) + (j / 3);// пройти по 9-ти секторам по очереди
+                if (!sector[k].Add(elem))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    //medium
+    public static int LongestConsecutive(int[] nums)
+    {
+
+        if (nums == null || nums.Length == 0)
+            return 0;
+        nums = nums.Distinct().ToArray();
+
+        HashSet<int> result = new HashSet<int>();
+
+        HashSet<int> temp = new HashSet<int>();
+
+        Array.Sort(nums);
+        temp.Add(nums[0]);
+        result.Add(nums[0]);
+
+        for (int i = 1; i < nums.Length; i++)
+        {
+            if (Math.Abs(nums[i] - temp.Max()) == 1 && i == nums.Length - 1)
+            {
+                temp.Add(nums[i]);
+                if (result.Count() < temp.Count())
+                {
+                    result = new HashSet<int>(temp);
+                }
+
+            }
+            else if (Math.Abs(nums[i] - temp.Max()) == 1)
+            {
+                temp.Add(nums[i]);
+            }
+            else
+            {
+                if (result.Count() < temp.Count())
+                {
+                    result = new HashSet<int>(temp);
+                }
+                temp.Clear();
+                temp.Add(nums[i]);
+            }
+        }
+
+        return result.Count();
+    }
 }
