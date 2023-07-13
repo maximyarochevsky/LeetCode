@@ -211,4 +211,41 @@ public class Solution
 
         return res;
     }
+
+    //medium
+    public static bool IsValidSudoku(char[][] board)
+    {
+        HashSet<char>[] row = new HashSet<char>[9]; // только уникальные элементы
+        HashSet<char>[] col = new HashSet<char>[9];
+        HashSet<char>[] sector = new HashSet<char>[9];
+
+        for (int i = 0; i < 9; i++)
+        {
+            row[i] = new HashSet<char>();
+            col[i] = new HashSet<char>();
+            sector[i] = new HashSet<char>();
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                var elem = board[i][j];
+                if (elem == '.')
+                    continue;
+
+                if (!row[j].Add(elem))
+                    return false;
+
+                if (!col[i].Add(elem))
+                    return false;
+
+                int k = (3 * (i / 3)) + (j / 3);// пройти по 9-ти секторам по очереди
+                if (!sector[k].Add(elem))
+                    return false;
+            }
+        }
+
+        return true;
+    }
 }

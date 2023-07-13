@@ -8,24 +8,22 @@ namespace LeetCode.SearchMethods
 {
     public class BinarySearch
     {
-        public static int BinarySearchMethod(int[] array, int value, int start, int end)
+        public static int BinarySearchMethod(int[] array, int value)
         {
-            int center = (start + end) / 2;
+            int center = array.Length / 2;
 
             if (array[center] == value)
                 return center;
 
             else if (array[center] > value)
             {
-                start = 0;
-                end = center;
-                return BinarySearchMethod(array, value, start, end);
+                array = array.Take(array.Length/2).ToArray();
+                return BinarySearchMethod(array, value);
             }
             else
             {
-                start = center;
-                end = array.Length;
-                return BinarySearchMethod(array, value, start, end);
+                array = array.TakeLast(array.Length / 2).ToArray();
+                return BinarySearchMethod(array, value);
             }
         }
     }
