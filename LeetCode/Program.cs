@@ -21,55 +21,61 @@ namespace LeetCode
 
         static void Main(string[] args)
         {
-            char[][] array = new char[9][];
-            
-            array[0] = new char[] {'5', '3', '.', '.', '7', '.', '.', '.', '.'};
-            array[1] = new char[] {'6', '.', '.', '1', '9', '5', '.', '.', '.'};
-            array[2] = new char[] {'.', '9', '8', '.', '.', '.', '.', '6', '.'};
-            array[3] = new char[] {'8', '.', '.', '.', '6', '.', '.', '.', '3'};
-            array[4] = new char[] {'4', '.', '.', '8', '.', '3', '.', '.', '1'};
-            array[5] = new char[] {'7', '.', '.', '.', '2', '.', '.', '.', '6'};
-            array[6] = new char[] {'.', '6', '.', '.', '.', '.', '2', '8', '.'};
-            array[7] = new char[] {'.', '.', '.', '4', '1', '9', '.', '.', '5'};
-            array[8] = new char[] {'.', '.', '.', '.', '8', '.', '.', '7', '9'};
-
-            Console.WriteLine(IsValidSudoku(array));
-            Console.WriteLine(1/3);
+            int[] array = { 4, 0, -4, -2, 2, 5, 2, 0, -8, -8, -8, -8, -1, 7, 4, 5, 5, -4, 6, 6, -3 };
+            Console.WriteLine(LongestConsecutive(array));
         }
-        public static bool IsValidSudoku(char[][] board)
+        public static int LongestConsecutive(int[] nums)
         {
-            HashSet<char>[] row = new HashSet<char>[9];
-            HashSet<char>[] col = new HashSet<char>[9];
-            HashSet<char>[] sector = new HashSet<char>[9];
 
-            for (int i = 0; i < 9; i++)
-            {
-                row[i] = new HashSet<char>();
-                col[i] = new HashSet<char>();
-                sector[i] = new HashSet<char>();
-            }
+            if (nums == null || nums.Length == 0)
+                return 0;
 
-            for (int i = 0; i < 9; i++)
+            HashSet<int> result = new HashSet<int>();
+
+            HashSet<int> temp = new HashSet<int>();
+
+            Array.Sort(nums);
+            temp.Add(nums[0]);
+            result.Add(nums[0]);
+
+            for (int i = 1; i < nums.Length; i++)
             {
-                for (int j = 0; j < 9; j++)
+                if (nums[i] == temp.Max())
                 {
-                    var elem = board[i][j];
-                    if(elem == '.')
-                        continue;
-
-                    if (!row[j].Add(elem))
-                        return false;
-
-                    if (!col[i].Add(elem))
-                        return false;
-
-                    int k = (3 * (i / 3)) + (j / 3);
-                    if (!sector[k].Add(elem))
-                        return false;
+                    if (i == nums.Length - 1)
+                    {
+                        if (result.Count() < temp.Count())
+                        {
+                            result = new HashSet<int>(temp);
+                        }
+                    }
+                    continue;
+                }
+                else if (Math.Abs(nums[i] - temp.Max()) == 1 && i == nums.Length - 1)
+                {
+                        temp.Add(nums[i]);
+                        if (result.Count() < temp.Count())
+                        {
+                            result = new HashSet<int>(temp);
+                        }
+                    
+                }
+                 else if(Math.Abs(nums[i] - temp.Max()) == 1)
+                {
+                    temp.Add(nums[i]);
+                }
+                else
+                {
+                    if (result.Count() < temp.Count())
+                    {
+                        result = new HashSet<int>(temp);
+                    }
+                    temp.Clear();
+                    temp.Add(nums[i]);
                 }
             }
 
-            return true;
+            return result.Count();
         }
     }
 }

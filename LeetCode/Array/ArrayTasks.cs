@@ -248,4 +248,49 @@ public class Solution
 
         return true;
     }
+
+    //medium
+    public static int LongestConsecutive(int[] nums)
+    {
+
+        if (nums == null || nums.Length == 0)
+            return 0;
+        nums = nums.Distinct().ToArray();
+
+        HashSet<int> result = new HashSet<int>();
+
+        HashSet<int> temp = new HashSet<int>();
+
+        Array.Sort(nums);
+        temp.Add(nums[0]);
+        result.Add(nums[0]);
+
+        for (int i = 1; i < nums.Length; i++)
+        {
+            if (Math.Abs(nums[i] - temp.Max()) == 1 && i == nums.Length - 1)
+            {
+                temp.Add(nums[i]);
+                if (result.Count() < temp.Count())
+                {
+                    result = new HashSet<int>(temp);
+                }
+
+            }
+            else if (Math.Abs(nums[i] - temp.Max()) == 1)
+            {
+                temp.Add(nums[i]);
+            }
+            else
+            {
+                if (result.Count() < temp.Count())
+                {
+                    result = new HashSet<int>(temp);
+                }
+                temp.Clear();
+                temp.Add(nums[i]);
+            }
+        }
+
+        return result.Count();
+    }
 }
