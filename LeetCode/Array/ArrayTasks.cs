@@ -255,24 +255,26 @@ public class Solution
 
         if (nums == null || nums.Length == 0)
             return 0;
+
         nums = nums.Distinct().ToArray();
 
-        HashSet<int> result = new HashSet<int>();
+        if (nums.Length == 0)
+            return 1;
 
-        HashSet<int> temp = new HashSet<int>();
+        int result = 0;
+
+        int temp = 0;
 
         Array.Sort(nums);
-        temp.Add(nums[0]);
-        result.Add(nums[0]);
 
-        for (int i = 1; i < nums.Length; i++)
+        for (int i = 0; i < nums.Length; i++)
         {
             if (Math.Abs(nums[i] - temp.Max()) == 1 && i == nums.Length - 1)
             {
                 temp.Add(nums[i]);
-                if (result.Count() < temp.Count())
+                if (result < temp.Count())
                 {
-                    result = new HashSet<int>(temp);
+                    result = temp.Count;
                 }
 
             }
@@ -282,15 +284,15 @@ public class Solution
             }
             else
             {
-                if (result.Count() < temp.Count())
+                if (result < temp.Count())
                 {
-                    result = new HashSet<int>(temp);
+                    result = temp.Count;
                 }
                 temp.Clear();
                 temp.Add(nums[i]);
             }
         }
 
-        return result.Count();
+        return result;
     }
 }

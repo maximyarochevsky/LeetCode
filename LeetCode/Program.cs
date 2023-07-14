@@ -29,6 +29,7 @@ namespace LeetCode
 
             if (nums == null || nums.Length == 0)
                 return 0;
+            nums = nums.Distinct().ToArray();
 
             HashSet<int> result = new HashSet<int>();
 
@@ -40,18 +41,7 @@ namespace LeetCode
 
             for (int i = 1; i < nums.Length; i++)
             {
-                if (nums[i] == temp.Max())
-                {
-                    if (i == nums.Length - 1)
-                    {
-                        if (result.Count() < temp.Count())
-                        {
-                            result = new HashSet<int>(temp);
-                        }
-                    }
-                    continue;
-                }
-                else if (Math.Abs(nums[i] - temp.Max()) == 1 && i == nums.Length - 1)
+                if (Math.Abs(nums[i] - temp.Max()) == 1 && i == nums.Length - 1)
                 {
                         temp.Add(nums[i]);
                         if (result.Count() < temp.Count())
