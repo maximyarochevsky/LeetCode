@@ -295,4 +295,39 @@ public class Solution
 
         return result;
     }
+
+        public int LongestConsecutive(int[] nums)
+        {
+            Array.Sort(nums);
+            HashSet<int> hash_nums = new HashSet<int>(nums);
+            nums = hash_nums.ToArray();
+
+            if (nums.Length == 1)
+                return 1;
+
+            int max_length = 0,
+                temp_max_length = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if ((i != nums.Length - 1 && nums[i + 1] - nums[i] == 1) || (i == nums.Length - 1 && nums[i] - nums[i - 1] == 1))  ///for the last element of array if its a continue of current consecutive
+                    temp_max_length++;
+                else
+                {
+                    if (i != nums.Length - 1 && nums[i + 1] - nums[i] != 1) // its end of consecutive
+                        temp_max_length++;
+
+                    if (temp_max_length == 0) //if its not contain consecutive
+                        temp_max_length = 1;
+
+                    max_length = Math.Max(max_length, temp_max_length);
+                    temp_max_length = 0;
+                }
+            }
+
+            if (temp_max_length != 0) //if the last element of consecutive was the last element of array 
+                max_length = Math.Max(max_length, temp_max_length);
+            return max_length;
+        }
+    }
 }
