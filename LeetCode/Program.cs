@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LeetCode;
 
 namespace LeetCode
 {
@@ -21,51 +22,29 @@ namespace LeetCode
 
         static void Main(string[] args)
         {
-            int[] array = { 4, 0, -4, -2, 2, 5, 2, 0, -8, -8, -8, -8, -1, 7, 4, 5, 5, -4, 6, 6, -3 };
-            Console.WriteLine(LongestConsecutive(array));
-        }
-        public static int LongestConsecutive(int[] nums)
-        {
+          ListNode first = new ListNode()
+          {
+              value = 1,
+              next = new ListNode()
+              {
+                  value = 1,
+                  next = new ListNode()
+                  {
+                      value = 2,
+                      next = new ListNode()
+                      {
+                          value = 2,
+                          next = null,
+                      }
+                  }
+              }
+          };
 
-            if (nums == null || nums.Length == 0)
-                return 0;
-            nums = nums.Distinct().ToArray();
+          ListNode withoutDuplicates = DeleteDuplicates(first);
 
-            HashSet<int> result = new HashSet<int>();
-
-            HashSet<int> temp = new HashSet<int>();
-
-            Array.Sort(nums);
-            temp.Add(nums[0]);
-            result.Add(nums[0]);
-
-            for (int i = 1; i < nums.Length; i++)
-            {
-                if (Math.Abs(nums[i] - temp.Max()) == 1 && i == nums.Length - 1)
-                {
-                        temp.Add(nums[i]);
-                        if (result.Count() < temp.Count())
-                        {
-                            result = new HashSet<int>(temp);
-                        }
-                    
-                }
-                 else if(Math.Abs(nums[i] - temp.Max()) == 1)
-                {
-                    temp.Add(nums[i]);
-                }
-                else
-                {
-                    if (result.Count() < temp.Count())
-                    {
-                        result = new HashSet<int>(temp);
-                    }
-                    temp.Clear();
-                    temp.Add(nums[i]);
-                }
-            }
-
-            return result.Count();
+              Console.WriteLine(withoutDuplicates.value);
+              Console.WriteLine(withoutDuplicates.next.value);
         }
     }
+
 }
