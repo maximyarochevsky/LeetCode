@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace LeetCode.TwoPointers
 {
-    internal class TwoPointersTasks
+    public class TwoPointersTasks
     {
+        public bool IsPalindrome(string s)
+        {
+            var clean = s.ToLower().Where(x => char.IsLetterOrDigit(x));
+            return clean.Reverse().SequenceEqual(clean);
+        }
     }
 }

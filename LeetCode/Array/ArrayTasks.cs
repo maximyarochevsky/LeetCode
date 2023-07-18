@@ -38,14 +38,18 @@ public class Solution
             int complement = target - nums[i];
             if (seen.ContainsKey(complement))
             {
-                return new int[] {
+                return new int[]
+                {
                     seen[complement], i
                 };
             }
+
             seen[nums[i]] = i;
         }
+
         return null; // No solution found
     }
+
     //easy
     public static int MaxProfit(int[] prices)
     {
@@ -58,8 +62,10 @@ public class Solution
             else if (result < prices[i] - min)
                 result = prices[i] - min;
         }
+
         return result;
     }
+
     //medium
     public static int[] ProductExceptSelf(int[] nums)
     {
@@ -240,7 +246,7 @@ public class Solution
                 if (!col[i].Add(elem))
                     return false;
 
-                int k = (3 * (i / 3)) + (j / 3);// пройти по 9-ти секторам по очереди
+                int k = (3 * (i / 3)) + (j / 3); // пройти по 9-ти секторам по очереди
                 if (!sector[k].Add(elem))
                     return false;
             }
@@ -250,84 +256,62 @@ public class Solution
     }
 
     //medium
+    //public int LongestConsecutive(int[] nums)
+    //{
+    //    HashSet<int> set = new HashSet<int>(nums);
+    //    int maxLength = 0;
+
+    //    foreach (int num in nums)
+    //    {
+    //        if (set.Contains(num - 1)) continue;
+
+    //        int length = 0;
+    //        while (set.Contains(num + length)) length++;
+
+    //        maxLength = Math.Max(maxLength, length);
+    //    }
+
+    //    return maxLength;
+    //}
     public static int LongestConsecutive(int[] nums)
     {
-
         if (nums == null || nums.Length == 0)
             return 0;
-
         nums = nums.Distinct().ToArray();
 
-        if (nums.Length == 0)
+        if (nums.Length == 1)
             return 1;
 
         int result = 0;
 
-        int temp = 0;
-
         Array.Sort(nums);
+        int temp = 1;
 
-        for (int i = 0; i < nums.Length; i++)
+        for (int i = 1; i < nums.Length; i++)
         {
-            if (Math.Abs(nums[i] - temp.Max()) == 1 && i == nums.Length - 1)
+            if (Math.Abs(nums[i] - nums[i - 1]) == 1 && i == nums.Length - 1)
             {
-                temp.Add(nums[i]);
-                if (result < temp.Count())
+                temp++;
+                if (result < temp)
                 {
-                    result = temp.Count;
+                    result = temp;
                 }
-
             }
-            else if (Math.Abs(nums[i] - temp.Max()) == 1)
+            else if (Math.Abs(nums[i] - nums[i - 1]) == 1)
             {
-                temp.Add(nums[i]);
+                temp++;
             }
             else
             {
-                if (result < temp.Count())
+                if (result < temp)
                 {
-                    result = temp.Count;
+                    result = temp;
                 }
-                temp.Clear();
-                temp.Add(nums[i]);
+
+                temp = 1;
             }
         }
 
         return result;
-    }
-
-        public int LongestConsecutive(int[] nums)
-        {
-            Array.Sort(nums);
-            HashSet<int> hash_nums = new HashSet<int>(nums);
-            nums = hash_nums.ToArray();
-
-            if (nums.Length == 1)
-                return 1;
-
-            int max_length = 0,
-                temp_max_length = 0;
-
-            for (int i = 0; i < nums.Length; i++)
-            {
-                if ((i != nums.Length - 1 && nums[i + 1] - nums[i] == 1) || (i == nums.Length - 1 && nums[i] - nums[i - 1] == 1))  ///for the last element of array if its a continue of current consecutive
-                    temp_max_length++;
-                else
-                {
-                    if (i != nums.Length - 1 && nums[i + 1] - nums[i] != 1) // its end of consecutive
-                        temp_max_length++;
-
-                    if (temp_max_length == 0) //if its not contain consecutive
-                        temp_max_length = 1;
-
-                    max_length = Math.Max(max_length, temp_max_length);
-                    temp_max_length = 0;
-                }
-            }
-
-            if (temp_max_length != 0) //if the last element of consecutive was the last element of array 
-                max_length = Math.Max(max_length, temp_max_length);
-            return max_length;
-        }
     }
 }
